@@ -39,6 +39,24 @@ sub _build_archive_html {
     }
     return $self->to->file('index.html');
 }
+has 'archive_db' => (is=>'ro',isa=>'Path::Class::File',lazy_build=>1,traits=> ['NoGetopt']);
+sub _build_archive_db {
+    my $self = shift;
+    return $self->to->file('archive_db');
+}
+has 'previous_stats' => (is=>'ro',isa=>'ArrayRef',lazy_build=>1,traits=>['NoGetopt']);
+sub _build_previous_stats {
+    my $self = shift;
+    if (-e $self->archive_db) {
+        my $dbr = $self->archive_db->openr;
+        my @data = <$dbr>; # probably better to just get last line...
+        my @prev = split(/;/,$data[-1]);
+        return \@prev;
+    }
+    else {
+        return [undef,0,0,0];
+    }
+}
 
 sub run {
     my $self = shift;
@@ -70,12 +88,21 @@ sub archive {
 
 sub update_index {
     my $self = shift;
-    my $runtime = $self->runtime;
 
     my $te = HTML::TableExtract->new( headers => [qw(stm sub total)] );
     $te->parse(scalar $self->coverage_html->slurp);
     my $rows =$te->rows;
     my $last_row = $rows->[-1];
+
+    $self->update_archive_html($last_row);
+    $self->update_archive_db($last_row);
+}
+
+sub update_archive_html {
+    my ($self, $last_row) = @_;
+
+    my $prev_stats = $self->previous_stats;
+    my $runtime = $self->runtime;
     my $date = $runtime->ymd('-').' '.$runtime->hms;
     my $link = $runtime->iso8601."/coverage.html";
 
@@ -90,6 +117,18 @@ sub update_index {
         }
         $new_stat.=qq{<td class="$style">$val</td>};
     }
+    my $prev_total = $prev_stats->[3];
+    my $this_total = $last_row->[-1];
+    if ($this_total == $prev_total) {
+        $new_stat.=qq{<td class="c3">=</td>};
+    }
+    elsif ($this_total > $prev_total) {
+        $new_stat.=qq{<td class="c3">+</td>};
+    }
+    else {
+        $new_stat.=qq{<td class="c0">-</td>};
+    }
+
     $new_stat.="</tr>\n";
 
     my $archive = $self->archive_html->slurp;
@@ -104,6 +143,12 @@ sub update_index {
     }
 }
 
+sub update_archive_db {
+    my ($self, $last_row) = @_;
+    my $dbw = $self->archive_db->open(">>") || warn "Can't write archive.db: $!";
+    say $dbw join(';',$self->runtime->iso8601,@$last_row);
+    close $dbw;
+}
 
 sub _archive_template {
     my $self = shift;
@@ -128,7 +173,7 @@ sub _archive_template {
 <h1>Test Coverage Archive for $name</h1>
 
 <table>
-<tr><th>Coverage Report</th><th>stmt</th><th>sub</th><th>total</th></tr>
+<tr><th>Coverage Report</th><th>stmt</th><th>sub</th><th>total</th><th>Trend</th></tr>
 <!-- INSERT -->
 </table>
 
@@ -138,7 +183,6 @@ sub _archive_template {
 </html>
 EOTMPL
 }
-
 
 __PACKAGE__->meta->make_immutable;
 1;
