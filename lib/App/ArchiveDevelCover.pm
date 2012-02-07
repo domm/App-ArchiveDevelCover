@@ -6,6 +6,7 @@ use DateTime;
 use File::Copy;
 use HTML::TableExtract;
 
+# ABSTRACT: Archive Devel::Cover reports
 our $VERSION = '1.000';
 
 with 'MooseX::Getopt';
