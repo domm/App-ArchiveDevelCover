@@ -188,4 +188,9 @@ EOTMPL
 __PACKAGE__->meta->make_immutable;
 1;
 
+__END__
+
+=head1 SYNOPSIS
+
+Backend for the C<archive_devel_cover.pl> command. See L<archive_devel_cover.pl> and/or C<perldoc archive_devel_cover.pl> for details.
 
