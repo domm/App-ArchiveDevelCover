@@ -14,8 +14,11 @@ sub tmpdir {
 
 sub run {
     my ($tempdir, $run) = @_;
+    my $src = Path::Class::dir(qw(t testdata),$run);
 
-    dircopy(Path::Class::dir(qw(t testdata), $run),$tempdir->subdir($run)) || die $!;
+    dircopy($src,$tempdir->subdir($run)) || die $!;
+    my $mtime = $src->file('coverage.html')->stat->mtime;
+    utime($mtime,$mtime,$tempdir->file($run,'coverage.html')->stringify);
     return $tempdir->subdir($run);
 }
 
