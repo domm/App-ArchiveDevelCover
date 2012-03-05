@@ -12,7 +12,12 @@ our $VERSION = '1.000';
 with 'MooseX::Getopt';
 
 has [qw(from to)] => (is=>'ro',isa=>'Path::Class::Dir',coerce=>1,required=>1,);
-has 'project' => (is => 'ro', isa=>'Str');
+has 'project' => (is => 'ro', isa=>'Str', lazy_build=>1);
+sub _build_project {
+    my $self = shift;
+    my @list = $self->from->parent->dir_list;
+    return $list[-1] || 'unknown project';
+}
 has 'coverage_html' => (is=>'ro',isa=>'Path::Class::File',lazy_build=>1,traits=> ['NoGetopt']);
 sub _build_coverage_html {
     my $self = shift;
@@ -153,7 +158,7 @@ sub update_archive_db {
 
 sub _archive_template {
     my $self = shift;
-    my $name = $self->project || 'unnamed project';
+    my $name = $self->project;
     my $class = ref($self);
     my $version = $class->VERSION;
     return <<"EOTMPL";

@@ -17,7 +17,6 @@ my $temp = testdata::setup::tmpdir();
     my $a = App::ArchiveDevelCover->new(
         from=>$run,
         to=>$temp->subdir('archive'),
-        project=>'first test',
     );
     trap { $a->run; };
     is ( $trap->exit, undef, 'exit() == undef' );
@@ -26,6 +25,11 @@ my $temp = testdata::setup::tmpdir();
     foreach my $file (qw(index.html cover.css archive_db 2012-02-20T19:56:58/coverage.html)) {
         file_exists_ok($temp->file('archive',$file));
     }
+
+    my $index = $temp->file('archive','index.html')->slurp;
+    my @temp = $temp->dir_list;
+    my $title = 'Test Coverage Archive for '.$temp[-1];
+    like($index,qr/$title/,'project title');
 }
 
 { # archive the same run again
