@@ -184,20 +184,21 @@ sub generate_diff {
         my $data = $diff{$file};
 
         my $line = qq{\n<tr><td>$file</td>};
-        foreach my $val (@$data[3,4,5]) {
-            $line.=$self->td_style($val);
-        }
+        #foreach my $val (@$data[3,4,5]) {
+        #    $line.=$self->td_style($val);
+        #}
         foreach my $i (0,1,2) {
             my $nv = $data->[$i];
             my $ov = $data->[$i+2];
+            my $display = "$ov -&gt; $nv";
             if ($nv == $ov) {
-                $line.=qq{<td>$nv</td>};
+                $line.=qq{<td>$display</td>};
             }
             elsif ($nv > $ov) {
-                $line.=$self->td_style(100,$nv);
+                $line.=$self->td_style(100,$display);
             }
             else {
-                $line.=$self->td_style(0,$nv);
+                $line.=$self->td_style(0,$display);
             }
         }
         $line.="</tr>";
@@ -245,7 +246,7 @@ sub _diff_template {
         "Test Coverage Diff for $name",
         q{
 <table>
-<tr><th>File</th><th>old stmt</th><th>old sub</th><th>old total</th><th>new stmt</th><th>new sub</th><th>new total</th></tr>
+<tr><th>File</th><th>stmt</th><th>sub</th><th>total</th></tr>
 DATA
 </table>
         });
