@@ -117,8 +117,9 @@ sub update_archive_html {
     my $runtime = $self->runtime;
     my $date = $runtime->ymd('-').' '.$runtime->hms;
     my $link = $runtime->iso8601."/coverage.html";
+    my $diff = $runtime->iso8601."/diff.html";
 
-    my $new_stat = qq{\n<tr><td><a href="$link">$date</a></td>};
+    my $new_stat = qq{\n<tr><td><a href="$link">$date</a></td><td><a href="$diff">diff</a></td>};
     foreach my $val (@$last_row) {
         $new_stat.=$self->td_style($val);
     }
@@ -233,7 +234,7 @@ sub _archive_template {
         "Test Coverage Archive for $name",
         q{
 <table>
-<tr><th>Coverage Report</th><th>stmt</th><th>sub</th><th>total</th><th>Trend</th></tr>
+<tr><th>Coverage Report</th><th>diff</th><th>stmt</th><th>sub</th><th>total</th><th>Trend</th></tr>
 <!-- INSERT -->
 </table>
         });
