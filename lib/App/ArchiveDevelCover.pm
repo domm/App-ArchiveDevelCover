@@ -185,9 +185,6 @@ sub generate_diff {
         my $data = $diff{$file};
 
         my $line = qq{\n<tr><td>$file</td>};
-        #foreach my $val (@$data[3,4,5]) {
-        #    $line.=$self->td_style($val);
-        #}
         foreach my $i (0,1,2) {
             my $nv = $data->[$i];
             my $ov = $data->[$i+2];
@@ -252,10 +249,10 @@ DATA
 </table>
         });
 }
+
 sub _page_template {
     my ($self, $title, $content) = @_;
 
-    my $self = shift;
     my $name = $self->project;
     my $class = ref($self);
     my $version = $class->VERSION;
