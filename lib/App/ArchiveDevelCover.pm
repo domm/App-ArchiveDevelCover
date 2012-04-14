@@ -187,7 +187,7 @@ sub generate_diff {
         my $line = qq{\n<tr><td>$file</td>};
         foreach my $i (0,1,2) {
             my $nv = $data->[$i] || 0;
-            my $ov = $data->[$i+2] || 0;
+            my $ov = $data->[$i+3] || 0;
             my $display = "$ov&nbsp;-&gt;&nbsp;$nv";
             if ($nv == $ov) {
                 $line.=qq{<td>$display</td>};
