@@ -22,7 +22,7 @@ my $temp = testdata::setup::tmpdir();
     is ( $trap->exit, undef, 'exit() == undef' );
     like($trap->stdout,qr/archived coverage reports at $temp/,'command output location');
 
-    foreach my $file (qw(index.html cover.css archive_db 2012-02-20T19:56:58/coverage.html)) {
+    foreach my $file (qw(index.html cover.css archive_db 2012-02-20T18:20:00/coverage.html)) {
         file_exists_ok($temp->file('archive',$file));
     }
 
@@ -53,7 +53,7 @@ my $temp = testdata::setup::tmpdir();
     is ( $trap->exit, undef, 'exit() == undef' );
     like($trap->stdout,qr/archived coverage reports at $temp/,'command output location');
 
-    foreach my $file (qw(index.html cover.css archive_db 2012-02-20T20:28:36/coverage.html)) {
+    foreach my $file (qw(index.html cover.css archive_db 2012-02-20T19:40:00/coverage.html)) {
         file_exists_ok($temp->file('archive',$file));
     }
     my @archive = $temp->file('archive','archive_db')->slurp;

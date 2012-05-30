@@ -12,12 +12,17 @@ sub tmpdir {
     return $tempdir;
 }
 
+my %runs = (
+    'run_1' => 1329762000, #2012-02-20T19:20:00
+    'run_2' => 1329766800, #2012-02-20T20:40:00
+);
+
 sub run {
     my ($tempdir, $run) = @_;
     my $src = Path::Class::dir(qw(t testdata),$run);
 
     dircopy($src,$tempdir->subdir($run)) || die $!;
-    my $mtime = $src->file('coverage.html')->stat->mtime;
+    my $mtime = $runs{$run};
     utime($mtime,$mtime,$tempdir->file($run,'coverage.html')->stringify);
     return $tempdir->subdir($run);
 }
