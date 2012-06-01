@@ -1,6 +1,6 @@
 Changes for App-ArchiveDevelCover
 
-1.001   2012-04-04T07:20:04-0400
+1.001   2012-06-01T21:45:22+0200
     - added diff.html that shows which coverage metrics
       have changed per file
       NOTE: archives generated with older version probably won't
