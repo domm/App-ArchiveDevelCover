@@ -30,6 +30,8 @@ my $temp = testdata::setup::tmpdir();
     my @temp = $temp->dir_list;
     my $title = 'Test Coverage Archive for '.$temp[-1];
     like($index,qr/$title/,'project title');
+    like($index,qr#href="\./2012-02-20T18:20:00/coverage\.html#,'link to coverage');
+    like($index,qr#href="\./2012-02-20T18:20:00/diff\.html#,'link to diff');
 }
 
 { # archive the same run again
