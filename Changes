@@ -1,5 +1,10 @@
 Changes for App-ArchiveDevelCover
 
+1.002   2012-11-21T22:01:11+0100
+    - Better links in archive (Henrik Hald Nørgaard, CPAN-RT#81092)
+    - Quote tempfile name in regexps (Pedro Melo)
+
+
 1.001   2012-06-01T21:45:22+0200
     - added diff.html that shows which coverage metrics
       have changed per file

@@ -7,7 +7,7 @@ use File::Copy;
 use HTML::TableExtract;
 
 # ABSTRACT: Archive Devel::Cover reports
-our $VERSION = '1.001';
+our $VERSION = '1.002';
 
 with 'MooseX::Getopt';
 
