@@ -5,6 +5,7 @@ use MooseX::Types::Path::Class;
 use DateTime;
 use File::Copy;
 use HTML::TableExtract;
+use experimental qw(switch);
 
 # ABSTRACT: Archive Devel::Cover reports
 our $VERSION = '1.002';
