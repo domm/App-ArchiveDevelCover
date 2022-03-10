@@ -1,2 +1,4 @@
 App-ArchiveDevelCover*
 cover_db
+local
+.build/
