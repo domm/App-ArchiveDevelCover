@@ -1,6 +1,8 @@
 Changes for App-ArchiveDevelCover
 
 {{$NEXT}}
+
+1.003     2022-03-10 17:01:20+01:00
     - Enable experimental switch. (Håkon Hægland)
     - dist housekeeping, Dist::Zilla::PluginBundle::Author::DOMM
 
