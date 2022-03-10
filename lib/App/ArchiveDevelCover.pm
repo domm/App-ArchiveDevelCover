@@ -8,7 +8,7 @@ use HTML::TableExtract;
 use experimental qw(switch);
 
 # ABSTRACT: Archive Devel::Cover reports
-our $VERSION = '1.002';
+# VERSION
 
 with 'MooseX::Getopt';
 

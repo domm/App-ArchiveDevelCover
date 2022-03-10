@@ -4,7 +4,7 @@ App::ArchiveDevelCover - Archive Devel::Cover reports
 
 # VERSION
 
-version 1.003
+version 1.004
 
 # SYNOPSIS
 
@@ -12,7 +12,7 @@ Backend for the `archive_devel_cover.pl` command. See [archive\_devel\_cover.pl]
 
 # AUTHOR
 
-Thomas Klausner <domm@cpan.org>
+Thomas Klausner <domm@plix.at>
 
 # COPYRIGHT AND LICENSE
 
