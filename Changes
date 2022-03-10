@@ -1,6 +1,8 @@
 Changes for App-ArchiveDevelCover
 
 {{$NEXT}}
+
+1.004     2022-03-10 17:05:55+01:00
     - more dist housekeeping, Dist::Zilla::PluginBundle::Author::DOMM
 
 1.003     2022-03-10 17:01:20+01:00
